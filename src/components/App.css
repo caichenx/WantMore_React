@@ -1,0 +1,22 @@
+body {
+  font-family: "Guardian-EgypTT", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-family: "Guardian-EgypTT", sans-serif;
+  margin-bottom: 5px;
+}
+
+.navbar {
+  border-style: solid hidden;
+  border-width: 1px;
+  border-color: darkgray;
+  padding: 10px;
+  font-size: 15px;
+}
+
+.bg-secondary {
+  background-color: lightcoral !important;
+  border-radius: 1000px;
+}

@@ -1,0 +1,24 @@
+.carousel-container {
+  height: 400px;
+}
+
+div.carousel-inner {
+  height: 400px;
+  border-radius: 2px;
+}
+
+div.carousel-caption {
+  font-family: "Guardian-EgypTT", sans-serif;
+  bottom: 25rem;
+  right: 0;
+  left: 35rem;
+  text-transform: uppercase;
+}
+
+div.carousel-caption h5 {
+  font-size: 3rem;
+}
+
+div.carousel-caption p {
+  font-size: 1.5rem;
+}
