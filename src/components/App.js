@@ -119,7 +119,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Vince And Kath</h1>
+        <h1>Want More</h1>
         {/* TODO fix item count */}
         <NaviHeader itemCount={this.state.cart.length} />
         <Route path="/">

@@ -6,7 +6,7 @@ const NaviHeader = ({ itemCount }) => {
     <nav className="navbar navbar-expand-md navbar-light">
       <div className="container">
         <Link className="navbar-brand" href="/">
-          Vince && Kath
+          Want More
         </Link>
         <button
           className="navbar-toggler"
