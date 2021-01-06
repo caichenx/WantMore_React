@@ -68,10 +68,6 @@ class App extends React.Component {
     }
   };
 
-  //BUG index is wrong
-  // reason identified: index received: ,,2
-  // map() function will create a new array
-
   findIdentical(cart, item) {
     let identical = null;
     cart.map((itemInCart) => {
@@ -120,7 +116,6 @@ class App extends React.Component {
     return (
       <div>
         <h1>Want More</h1>
-        {/* TODO fix item count */}
         <NaviHeader itemCount={this.state.cart.length} />
         <Route path="/">
           {/* <Carousel /> */}
