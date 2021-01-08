@@ -68,48 +68,8 @@ class App extends React.Component {
     }
   };
 
-  findIdentical(cart, item) {
-    let identical = null;
-    cart.map((itemInCart) => {
-      if (itemInCart.product.id === item.id) {
-        let index = cart.indexOf(itemInCart);
-        identical = index;
-      }
-    });
-
-    return identical;
-  }
-
-  removeFromCart = (item) => {
-    const newCart = [...this.state.cart];
-    const index = this.findIdentical(newCart, item);
-    console.log(`index received: ${index}`);
-    if (index !== null) {
-      newCart.splice(index, 1);
-      this.setState({ cart: newCart });
-    }
-  };
-
-  increaseQuantity = (item) => {
-    const index = this.findIdentical(this.state.cart, item);
-    if (index !== null) {
-      const newCart = [...this.state.cart];
-      newCart[index].quantity += 1;
-      this.setState({ cart: newCart });
-    }
-  };
-
-  decreaseQuantity = (item) => {
-    const index = this.findIdentical(this.state.cart, item);
-    if (index !== null) {
-      const newCart = [...this.state.cart];
-      if (newCart[index].quantity - 1 === 0) {
-        this.removeFromCart(item);
-      } else {
-        newCart[index].quantity -= 1;
-        this.setState({ cart: newCart });
-      }
-    }
+  updateCart = (newCart) => {
+    this.setState({ cart: newCart });
   };
 
   render() {
@@ -119,7 +79,7 @@ class App extends React.Component {
         <NaviHeader itemCount={this.state.cart.length} />
         <Route path="/">
           {/* <Carousel /> */}
-          <FeatureBar />
+          <FeatureBar fetchImages={this.fetchImages} />
           <h2
             style={{
               textAlign: "center",
@@ -152,11 +112,12 @@ class App extends React.Component {
           />
         </Route>
         <Route path="/cart">
-          <Cart
-            cart={this.state.cart}
-            removeFromCart={this.removeFromCart}
-            increaseQuantity={this.increaseQuantity}
-            decreaseQuantity={this.decreaseQuantity}
+          <Cart cart={this.state.cart} updateCart={this.updateCart} />
+        </Route>
+        <Route path="/popular">
+          <Marketplace
+            images={this.state.images}
+            onProductClick={this.onProductClick}
           />
         </Route>
       </div>
