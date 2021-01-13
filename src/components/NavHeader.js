@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "./Link";
 
-const NaviHeader = ({ itemCount }) => {
+const NaviHeader = ({ itemCount, user, logout }) => {
   return (
     <nav className="navbar navbar-expand-md navbar-light">
       <div className="container">
@@ -52,9 +52,21 @@ const NaviHeader = ({ itemCount }) => {
           <button className="btn btn-success me-2" type="button" disabled>
             SIGN UP
           </button>
-          <button className="btn btn-success me-2" type="button" disabled>
-            LOGIN
-          </button>
+          <Link className="nav-link" aria-current="page" active href="/login">
+            {user ? (
+              <button
+                className="btn btn-success me-2"
+                type="button"
+                onClick={logout}
+              >
+                LOGOUT
+              </button>
+            ) : (
+              <button className="btn btn-success me-2" type="button">
+                LOGIN
+              </button>
+            )}
+          </Link>
         </div>
       </div>
     </nav>

@@ -9,7 +9,7 @@ const FeatureBar = ({ fetchImages }) => {
   return (
     <div className="category-bar">
       <div className="ui container">
-        <h2>Find things you'll love. Only on Vince And Kath</h2>
+        <h2>Find things you'll love. Only on Want More</h2>
         <div className="ui three column grid">
           <section className="column">
             <Link href="/popular">

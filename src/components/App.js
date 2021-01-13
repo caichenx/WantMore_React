@@ -3,14 +3,17 @@ import NaviHeader from "./NavHeader";
 import FeatureBar from "./FeatureBar";
 import Carousel from "./Carousel";
 import unsplash from "../api/unsplash";
+import axios from "axios";
 import Marketplace from "./Marketplace";
 import Route from "./Route";
 import ItemDetails from "./ItemDetails";
 import Cart from "./Cart";
+import Login from "./Login";
 import "./App.css";
+import jwtDecode from "jwt-decode";
 
 class App extends React.Component {
-  state = { images: [], selectedItem: null, cart: [] };
+  state = { images: [], selectedItem: null, cart: [], user: null };
 
   fetchImages = async (term, numOfResult) => {
     const response = await unsplash.get("/search/photos", {
@@ -31,6 +34,10 @@ class App extends React.Component {
 
   componentDidMount() {
     this.fetchImages("plants", 24);
+    //loads the last user session from the local storage to the state if it exists
+    let user = localStorage.getItem("user");
+    user = user ? JSON.parse(user) : null;
+    this.setState({ user });
   }
 
   onProductClick = (productInfo) => {
@@ -72,11 +79,47 @@ class App extends React.Component {
     this.setState({ cart: newCart });
   };
 
+  login = async (email, password) => {
+    //make an Ajax request to /login endpoint, passing it whatever the user entered into the login form
+    const res = await axios
+      .post("http://localhost:3001/login", { email, password })
+      .catch((res) => {
+        return { status: 401, message: "unauthorised" };
+      });
+    // if the response is 200, then assume the user's credentials were correct.
+    if (res.status === 200) {
+      // decode the token sent in the server's response to obtain user's email
+      const { email } = jwtDecode(res.data.accessToken);
+      const user = {
+        email,
+        token: res.data.accessToken,
+        // superficial solution to check user's permission level
+        accessLevel: email === "admin@example.com" ? 0 : 1,
+      };
+      this.setState({ user });
+      localStorage.setItem("user", JSON.stringify(user));
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  logout = (e) => {
+    e.preventDefault();
+    // clear the user from both state and local storage
+    this.setState({ user: null });
+    localStorage.removeItem("user");
+  };
+
   render() {
     return (
       <div>
         <h1>Want More</h1>
-        <NaviHeader itemCount={this.state.cart.length} />
+        <NaviHeader
+          itemCount={this.state.cart.length}
+          user={this.state.user}
+          logout={this.logout}
+        />
         <Route path="/">
           {/* <Carousel /> */}
           <FeatureBar fetchImages={this.fetchImages} />
@@ -119,6 +162,9 @@ class App extends React.Component {
             images={this.state.images}
             onProductClick={this.onProductClick}
           />
+        </Route>
+        <Route path="/login">
+          <Login user={this.state.user} login={this.login} />
         </Route>
       </div>
     );
