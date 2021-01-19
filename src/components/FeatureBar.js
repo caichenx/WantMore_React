@@ -3,14 +3,22 @@ import Link from "./Link";
 import popular from "../images/popular-image.jpg";
 import gift from "../images/gift.jpg";
 import specials from "../images/specials.jpg";
-import "./FeatureBar.css";
+import "./style/FeatureBar.css";
 
 const FeatureBar = ({ fetchImages }) => {
   return (
     <div className="category-bar">
       <div className="ui container">
-        <h2>Find things you'll love. Only on Want More</h2>
-        <div className="ui three column grid">
+        <div className="featurebar-text">
+          <p>
+            <span className="text-enlarge">Find </span> things you
+            <span className="text-enlarge"> Love</span>
+          </p>
+          <p>
+            <span className="text-enlarge">Only</span> on WantMore
+          </p>
+        </div>
+        {/* <div className="ui three column grid">
           <section className="column">
             <Link href="/popular">
               <img alt="popular-items" src={popular} />
@@ -25,7 +33,7 @@ const FeatureBar = ({ fetchImages }) => {
             <img alt="gifts" src={specials} />
             <h4>Specials 🚀</h4>
           </section>
-        </div>
+        </div> */}
       </div>
     </div>
   );

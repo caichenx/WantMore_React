@@ -24,7 +24,7 @@ class Login extends Component {
 
     const { username, password } = this.state;
     if (!username || !password) {
-      return this.setState({ error: "Fill all fields!" });
+      return this.setState({ error: "Please Fill all fields!" });
     }
     this.props.login(username, password).then((loggedIn) => {
       if (!loggedIn) {

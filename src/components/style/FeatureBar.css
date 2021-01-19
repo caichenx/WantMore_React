@@ -1,6 +1,6 @@
 .category-bar {
   background-color: rgb(47, 118, 109);
-  height: 16rem;
+  height: 11rem;
   text-align: center;
 }
 
@@ -14,13 +14,24 @@ div.ui.container img {
   border-radius: 500px;
 }
 
-div.ui.container h2 {
-  padding-top: 1rem;
-  margin-bottom: 2rem;
+.featurebar-text {
+  font-size: 2rem;
+  color: white;
+  padding-top: 3rem;
 }
 
-div.ui.container:nth-child(1) {
-  color: white;
+.featurebar-text p {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.featurebar-text p:nth-child(2) {
+  margin-left: 11rem;
+  margin-top: 1rem;
+}
+
+.text-enlarge {
+  font-size: 2.7rem;
 }
 
 #category-buttons {

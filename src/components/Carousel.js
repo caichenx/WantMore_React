@@ -1,6 +1,6 @@
 import React from "react";
 import "./ItemList.css";
-import "./Carousel.css";
+import "./style/Carousel.css";
 import homepage_4 from "../images/homepage_4.jpg";
 
 const Carousel = () => {

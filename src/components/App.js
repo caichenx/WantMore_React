@@ -1,20 +1,20 @@
 import React from "react";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
 import NaviHeader from "./NavHeader";
 import FeatureBar from "./FeatureBar";
-import Carousel from "./Carousel";
 import unsplash from "../api/unsplash";
-import axios from "axios";
 import Marketplace from "./Marketplace";
 import Route from "./Route";
 import ItemDetails from "./ItemDetails";
 import Cart from "./Cart";
 import Login from "./Login";
-import "./App.css";
-import jwtDecode from "jwt-decode";
+import "./style/App.css";
 
 class App extends React.Component {
-  state = { images: [], selectedItem: null, cart: [], user: null };
+  state = { products: [], selectedProduct: null, cart: [], user: null };
 
+  // fetch images from unsplash API
   fetchImages = async (term, numOfResult) => {
     const response = await unsplash.get("/search/photos", {
       params: {
@@ -24,12 +24,21 @@ class App extends React.Component {
       },
     });
 
-    // console.log(response.data.results);
+    // console.log(response);
 
-    this.setState({
-      images: response.data.results,
-      selectedItem: response.data.results[0],
+    // create product objects
+    const mapToProduct = response.data.results.map((result) => {
+      return {
+        id: result.id,
+        name: result.alt_description,
+        image: result.urls,
+        price: this.priceGenerator(),
+        quantitySelected: 0,
+      };
     });
+
+    // assign the product objects to the state
+    this.setState({ products: mapToProduct });
   };
 
   componentDidMount() {
@@ -40,28 +49,36 @@ class App extends React.Component {
     this.setState({ user });
   }
 
+  priceGenerator() {
+    const price = Math.floor(Math.random() * 40 + 10);
+    return `${price}.00`;
+  }
+
+  // if a product is clicked by users, get the information of the product
+  // the information will late be used to display the details of the product
   onProductClick = (productInfo) => {
-    this.setState({ selectedItem: productInfo });
+    this.setState({ selectedProduct: productInfo });
   };
 
+  // once the "add to cart" button in the "ItemDetail" component is clicked
+  // add the product the cart array
   addToCart = (item) => {
     let identicalItem = false;
     // if cart is empty, add the new item straightway
     if (this.state.cart.length === 0) {
+      item.quantitySelected = 1;
       this.setState({
-        cart: [{ product: item, quantity: 1 }],
+        cart: [item],
       });
     } else {
       // if cart is not empty
       const updateCart = [...this.state.cart];
       // check if identical item exists
-      const elementExist = updateCart.find(
-        (element) => element.product.id === item.id
-      );
+      const elementExist = updateCart.find((product) => product.id === item.id);
       // if exist, increase the number of the item instead of add the item in the cart
       if (elementExist) {
         let index = updateCart.indexOf(elementExist);
-        updateCart[index].quantity += 1;
+        updateCart[index].quantitySelected += 1;
         identicalItem = true;
       }
 
@@ -69,8 +86,9 @@ class App extends React.Component {
     }
     // if identical item doesn't exist, add the new item to the cart
     if (!identicalItem) {
+      item.quantitySelected = 1;
       this.setState({
-        cart: [...this.state.cart, { product: item, quantity: 1 }],
+        cart: [...this.state.cart, item],
       });
     }
   };
@@ -121,47 +139,33 @@ class App extends React.Component {
           logout={this.logout}
         />
         <Route path="/">
-          {/* <Carousel /> */}
           <FeatureBar fetchImages={this.fetchImages} />
-          <h2
-            style={{
-              textAlign: "center",
-              marginTop: "15px",
-              marginBottom: "10px",
-            }}
-          >
-            Discover unique hand-picked items
-          </h2>
           <hr />
           <Marketplace
-            images={this.state.images}
+            products={this.state.products}
             onProductClick={this.onProductClick}
           />
         </Route>
         <Route path="/marketplace">
           <Marketplace
-            images={this.state.images}
+            products={this.state.products}
             onProductClick={this.onProductClick}
           />
         </Route>
         <Route
           path={`/marketplace/${
-            this.state.selectedItem ? this.state.selectedItem.id : ""
+            this.state.selectedProduct ? this.state.selectedProduct.id : ""
           }`}
         >
           <ItemDetails
-            item={this.state.selectedItem ? this.state.selectedItem : ""}
+            selectedProduct={
+              this.state.selectedProduct ? this.state.selectedProduct : ""
+            }
             addToCart={this.addToCart}
           />
         </Route>
         <Route path="/cart">
           <Cart cart={this.state.cart} updateCart={this.updateCart} />
-        </Route>
-        <Route path="/popular">
-          <Marketplace
-            images={this.state.images}
-            onProductClick={this.onProductClick}
-          />
         </Route>
         <Route path="/login">
           <Login user={this.state.user} login={this.login} />

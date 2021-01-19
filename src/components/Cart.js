@@ -1,5 +1,7 @@
 import React from "react";
 import ItemQuantity from "./ItemQuantity";
+import Link from "./Link";
+import "./style/Cart.css";
 
 const Cart = ({ cart, updateCart }) => {
   const findIdentical = (cart, item) => {
@@ -7,13 +9,12 @@ const Cart = ({ cart, updateCart }) => {
     let identical = null;
     //check all elements in the cart array
     //if identical element found, get its index and assign it to the identical variable
-    cart.map((itemInCart) => {
-      if (itemInCart.product.id === item.id) {
-        let index = cart.indexOf(itemInCart);
-        identical = index;
+    for (var i in cart) {
+      if (cart[i].id === item.id) {
+        identical = i;
+        break;
       }
-    });
-
+    }
     return identical;
   };
 
@@ -37,7 +38,7 @@ const Cart = ({ cart, updateCart }) => {
     if (index !== null) {
       // since state is immutable, create an new array
       const newCart = [...cart];
-      newCart[index].quantity += 1;
+      newCart[index].quantitySelected += 1;
       // assign the new array back to the state
       updateCart(newCart);
     }
@@ -51,10 +52,10 @@ const Cart = ({ cart, updateCart }) => {
       // since state is immutable, create an new array
       const newCart = [...cart];
       // if the current quantity is 1, decreasing the quantity of the item will remove the item from the cart
-      if (newCart[index].quantity - 1 === 0) {
+      if (newCart[index].quantitySelected - 1 === 0) {
         removeFromCart(item);
       } else {
-        newCart[index].quantity -= 1;
+        newCart[index].quantitySelected -= 1;
         // assign the new array back to the state
         updateCart(newCart);
       }
@@ -64,23 +65,23 @@ const Cart = ({ cart, updateCart }) => {
   let totals = 0;
   const displayCart = () => {
     const renderedItems = cart.map((item) => {
-      totals += 13 * item.quantity;
+      totals += item.price * item.quantitySelected;
       return (
         <React.Fragment>
           <div className="row">
             <div className="col-md-3">
               <img
-                src={item.product.urls.thumb}
-                alt={item.product.alt_description}
+                src={item.image.thumb}
+                alt={item.name}
                 className="img-thumbnail"
                 style={{ height: "140px", width: "200px" }}
               />
             </div>
             <div className="col-md-4">
-              <h4>{item.product.alt_description}</h4>
+              <p className="product-desc">{item.name}</p>
               <button
                 className="btn btn-danger"
-                onClick={() => removeFromCart(item.product)}
+                onClick={() => removeFromCart(item)}
               >
                 Remove
               </button>
@@ -90,7 +91,9 @@ const Cart = ({ cart, updateCart }) => {
               increaseQuantity={increaseQuantity}
               decreaseQuantity={decreaseQuantity}
             />
-            <div className="col-md-2">{`AU$ ${13 * item.quantity}`}</div>
+            <div className="col-md-2">{`AU$ ${
+              item.price * item.quantitySelected
+            }`}</div>
           </div>
           <hr />
         </React.Fragment>
@@ -101,14 +104,19 @@ const Cart = ({ cart, updateCart }) => {
 
   return (
     <div className="container">
-      <h4 id="num-of-item">{`${cart.length} ITEM(S) IN YOUR CART`}</h4>
-      <hr />
+      {cart.length !== 0 ? (
+        <h4 id="num-of-item">{`${cart.length} ITEM(S) IN YOUR CART`}</h4>
+      ) : (
+        <h4>YOUR SHOPPING CART IS EMPTY</h4>
+      )}
       {displayCart()}
       <h3>{`TOTAL: $AU ${totals}.00`}</h3>
-      <button className="btn btn-success" disabled>
+      <button className="btn btn-success btn-checkout" disabled>
         CHECKOUT
       </button>
-      <button className="btn btn-success">CONTINUE</button>
+      <Link href="/marketplace">
+        <button className="btn btn-success btn-continue">CONTINUE</button>
+      </Link>
     </div>
   );
 };
