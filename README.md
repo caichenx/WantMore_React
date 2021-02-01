@@ -1,4 +1,4 @@
-# WantMore
+## WantMore
 
 This project was developed using JavaScript, ReactJS, HTML, CSS and Bootstrap.
 
