@@ -1,6 +1,6 @@
-## WantMore
-
+## About this project
 This project was developed using JavaScript, ReactJS, HTML, CSS and Bootstrap.
+
 
 ## How to run this project
 
