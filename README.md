@@ -6,7 +6,9 @@ This project was developed using JavaScript, ReactJS, HTML, CSS and Bootstrap.
 
 In the project directory, use command: 
 
-### `yarn start`
+```
+yarn start
+```
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -16,6 +18,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The authentication system was implemented by using json server for now. \
 To run the json server, make sure you are in the project directory and use command:
 
-### `json-server --watch db.json -m ./node_modules/json-server-auth --port 3001  `
+```
+json-server --watch db.json -m ./node_modules/json-server-auth --port 3001 
+```
 
 NOTE: The project and json server need to run on the seperate port. 
