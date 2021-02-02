@@ -15,7 +15,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## About the authentication system on the website
 
-The authentication system was implemented by using json server for now. \
+The authentication system was implemented using json server for now. \
 To run the json server, make sure you are in the project directory and use command:
 
 ```
