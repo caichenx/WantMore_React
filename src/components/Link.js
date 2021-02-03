@@ -11,7 +11,12 @@ const Link = ({ className, href, children }) => {
   };
 
   return (
-    <a className={className} href={href} onClick={onClick}>
+    <a
+      className={className}
+      href={href}
+      onClick={onClick}
+      style={{ padding: "0.5em" }}
+    >
       {children}
     </a>
   );

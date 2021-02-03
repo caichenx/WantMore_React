@@ -49,9 +49,11 @@ const NaviHeader = ({ itemCount, user, logout }) => {
               <a className="nav-link" active aria-current="page" href=""></a>
             </li>
           </ul>
-          <button className="btn btn-success me-2" type="button" disabled>
-            SIGN UP
-          </button>
+          <Link className="nav-link" aria-current="page" active href="">
+            <button className="btn btn-success me-2" type="button" disabled>
+              SIGN UP
+            </button>
+          </Link>
           <Link className="nav-link" aria-current="page" active href="/login">
             {user ? (
               <button
@@ -62,7 +64,11 @@ const NaviHeader = ({ itemCount, user, logout }) => {
                 LOGOUT
               </button>
             ) : (
-              <button className="btn btn-success me-2" type="button">
+              <button
+                className="btn btn-success me-2"
+                type="button"
+                style={{ minWidth: "80px" }}
+              >
                 LOGIN
               </button>
             )}
