@@ -34,4 +34,4 @@ To start the json server, make sure you are in the project directory and use com
 json-server --watch db.json -m ./node_modules/json-server-auth --port 3001 
 ```
 
-NOTE: The application and json server MUST run on the seperate port. 
+NOTE: The application and json server MUST be run on the seperate port. 
