@@ -25,7 +25,7 @@ yarn start
 ```
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### 2. Start json server
+### 2. Start the json server
 
 The authentication system on the website was implemented using json server for now. \
 To start the json server, make sure you are in the project directory and use command:
