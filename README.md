@@ -8,7 +8,7 @@ This project is an ecommerce site, developed using JavaScript, ReactJS, HTML, CS
 ### 2. Product Detail Page
 ![productDetail](screenshots/productDetail.jpg)
 
-### 1. Shopping Cart
+### 3. Shopping Cart
 ![cart](screenshots/cart.jpg)
 
 ## Run this project
